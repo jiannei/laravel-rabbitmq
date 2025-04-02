@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
 use Illuminate\Queue\Queue;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Jiannei\LaravelRabbitMQ\Queue\Jobs\RabbitMQJob;
 use PhpAmqpLib\Channel\AMQPChannel;
@@ -99,7 +98,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function push($job, $data = '', $queue = null)
     {
-        return $this->pushRaw($this->createPayload($job, $queue, $data), $queue, []);
+        return $this->pushRaw($this->createPayload($job, $queue, $data), $queue);
     }
 
     /**
@@ -557,8 +556,6 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function close(): void
     {
-        Log::info("close");
-
         if (isset($this->currentJob) && !$this->currentJob->isDeletedOrReleased()) {
             $this->reject($this->currentJob, true);
         }
