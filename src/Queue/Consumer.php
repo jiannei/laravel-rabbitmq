@@ -1,12 +1,11 @@
 <?php
 
-namespace Jiannei\LaravelRabbitMQ;
+namespace Jiannei\LaravelRabbitMQ\Queue;
 
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Queue\Worker;
 use Illuminate\Queue\WorkerOptions;
-use Jiannei\LaravelRabbitMQ\Queue\RabbitMQQueue;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Message\AMQPMessage;

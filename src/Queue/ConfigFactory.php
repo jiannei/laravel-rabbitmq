@@ -4,16 +4,16 @@ namespace Jiannei\LaravelRabbitMQ\Queue;
 
 use Illuminate\Support\Arr;
 
-class QueueConfigFactory
+class ConfigFactory
 {
     protected const CONFIG_OPTIONS = 'options';
 
     /**
      * Create a config object from config array
      */
-    public static function make(array $config = []): QueueConfig
+    public static function make(array $config = []): Config
     {
-        return tap(new QueueConfig(), function (QueueConfig $queueConfig) use ($config) {
+        return tap(new Config(), function (Config $queueConfig) use ($config) {
             if (!empty($queue = Arr::get($config, 'queue'))) {
                 $queueConfig->setQueue($queue);
             }
@@ -25,7 +25,7 @@ class QueueConfigFactory
         });
     }
 
-    protected static function getOptionsFromConfig(QueueConfig $queueConfig, array $config): void
+    protected static function getOptionsFromConfig(Config $queueConfig, array $config): void
     {
         $queueOptions = Arr::get($config, self::CONFIG_OPTIONS.'.queue', []) ?: [];
 

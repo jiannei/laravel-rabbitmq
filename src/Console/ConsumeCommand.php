@@ -4,7 +4,7 @@ namespace Jiannei\LaravelRabbitMQ\Console;
 
 use Illuminate\Queue\Console\WorkCommand;
 use Illuminate\Support\Str;
-use Jiannei\LaravelRabbitMQ\Consumer;
+use Jiannei\LaravelRabbitMQ\Queue\Consumer;
 
 class ConsumeCommand extends WorkCommand
 {

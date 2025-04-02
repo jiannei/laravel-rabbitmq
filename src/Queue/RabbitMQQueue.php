@@ -58,14 +58,14 @@ class RabbitMQQueue extends Queue implements QueueContract
     protected $currentJob = null;
     /**
      * Holds the Configuration
-     * @var QueueConfig
+     * @var Config
      */
     protected $config;
 
     /**
      * RabbitMQQueue constructor.
      */
-    public function __construct(QueueConfig $config, AbstractConnection $connection)
+    public function __construct(Config $config, AbstractConnection $connection)
     {
         $this->config = $config;
         $this->connection = $connection;
@@ -711,7 +711,7 @@ class RabbitMQQueue extends Queue implements QueueContract
         return [$destination, $exchange, $exchangeType, $attempts];
     }
 
-    protected function getConfig(): QueueConfig
+    protected function getConfig(): Config
     {
         return $this->config;
     }

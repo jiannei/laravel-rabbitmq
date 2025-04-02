@@ -7,6 +7,7 @@ use Illuminate\Queue\QueueManager;
 use Illuminate\Support\ServiceProvider;
 use Jiannei\LaravelRabbitMQ\Console\ConsumeCommand;
 use Jiannei\LaravelRabbitMQ\Queue\Connectors\RabbitMQConnector;
+use Jiannei\LaravelRabbitMQ\Queue\Consumer;
 use Jiannei\LaravelRabbitMQ\Queue\RabbitMQQueue;
 
 class LaravelServiceProvider extends ServiceProvider
@@ -71,7 +72,7 @@ class LaravelServiceProvider extends ServiceProvider
 
         /** @var RabbitMQQueue $connection */
         $connection = $queue->connection('rabbitmq');
-        
+
         $queue->stopping(static function () use ($connection): void {
             $connection->close();
         });

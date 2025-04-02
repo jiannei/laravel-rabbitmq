@@ -2,10 +2,9 @@
 
 namespace Jiannei\LaravelRabbitMQ\Queue;
 
-use Illuminate\Support\Arr;
 use Jiannei\LaravelRabbitMQ\Queue\Jobs\RabbitMQJob;
 
-class QueueConfig
+class Config
 {
     protected $queue = 'default';
 
@@ -44,7 +43,7 @@ class QueueConfig
         return $this->queue;
     }
 
-    public function setQueue(string $queue): QueueConfig
+    public function setQueue(string $queue): Config
     {
         $this->queue = $queue;
 
@@ -60,7 +59,7 @@ class QueueConfig
         return $this->dispatchAfterCommit;
     }
 
-    public function setDispatchAfterCommit($dispatchAfterCommit): QueueConfig
+    public function setDispatchAfterCommit($dispatchAfterCommit): Config
     {
         $this->dispatchAfterCommit = $this->toBoolean($dispatchAfterCommit);
 
@@ -75,7 +74,7 @@ class QueueConfig
         return $this->abstractJob;
     }
 
-    public function setAbstractJob(string $abstract): QueueConfig
+    public function setAbstractJob(string $abstract): Config
     {
         $this->abstractJob = $abstract;
 
@@ -100,7 +99,7 @@ class QueueConfig
         return $this->prioritizeDelayed;
     }
 
-    public function setPrioritizeDelayed($prioritizeDelayed): QueueConfig
+    public function setPrioritizeDelayed($prioritizeDelayed): Config
     {
         $this->prioritizeDelayed = $this->toBoolean($prioritizeDelayed);
 
@@ -119,7 +118,7 @@ class QueueConfig
         return $this->queueMaxPriority;
     }
 
-    public function setQueueMaxPriority($queueMaxPriority): QueueConfig
+    public function setQueueMaxPriority($queueMaxPriority): Config
     {
         if (is_numeric($queueMaxPriority) && intval($queueMaxPriority) > 1) {
             $this->queueMaxPriority = (int) $queueMaxPriority;
@@ -141,7 +140,7 @@ class QueueConfig
         return $this->exchange;
     }
 
-    public function setExchange(string $exchange): QueueConfig
+    public function setExchange(string $exchange): Config
     {
         $this->exchange = $exchange;
 
@@ -161,7 +160,7 @@ class QueueConfig
         return $this->exchangeType;
     }
 
-    public function setExchangeType(string $exchangeType): QueueConfig
+    public function setExchangeType(string $exchangeType): Config
     {
         $this->exchangeType = $exchangeType;
 
@@ -179,7 +178,7 @@ class QueueConfig
         return $this->exchangeRoutingKey;
     }
 
-    public function setExchangeRoutingKey(string $exchangeRoutingKey): QueueConfig
+    public function setExchangeRoutingKey(string $exchangeRoutingKey): Config
     {
         $this->exchangeRoutingKey = $exchangeRoutingKey;
 
@@ -194,7 +193,7 @@ class QueueConfig
         return $this->rerouteFailed;
     }
 
-    public function setRerouteFailed($rerouteFailed): QueueConfig
+    public function setRerouteFailed($rerouteFailed): Config
     {
         $this->rerouteFailed = $this->toBoolean($rerouteFailed);
 
@@ -210,7 +209,7 @@ class QueueConfig
         return $this->failedExchange;
     }
 
-    public function setFailedExchange(string $failedExchange): QueueConfig
+    public function setFailedExchange(string $failedExchange): Config
     {
         $this->failedExchange = $failedExchange;
 
@@ -226,7 +225,7 @@ class QueueConfig
         return $this->failedRoutingKey;
     }
 
-    public function setFailedRoutingKey(string $failedRoutingKey): QueueConfig
+    public function setFailedRoutingKey(string $failedRoutingKey): Config
     {
         $this->failedRoutingKey = $failedRoutingKey;
 
@@ -241,7 +240,7 @@ class QueueConfig
         return $this->quorum;
     }
 
-    public function setQuorum($quorum): QueueConfig
+    public function setQuorum($quorum): Config
     {
         $this->quorum = $this->toBoolean($quorum);
 
@@ -256,7 +255,7 @@ class QueueConfig
         return $this->options;
     }
 
-    public function setOptions(array $options): QueueConfig
+    public function setOptions(array $options): Config
     {
         $this->options = $options;
 

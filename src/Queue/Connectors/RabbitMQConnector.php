@@ -5,8 +5,8 @@ namespace Jiannei\LaravelRabbitMQ\Queue\Connectors;
 use Exception;
 use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Queue\Connectors\ConnectorInterface;
+use Jiannei\LaravelRabbitMQ\Queue\ConfigFactory;
 use Jiannei\LaravelRabbitMQ\Queue\Connection\ConnectionFactory;
-use Jiannei\LaravelRabbitMQ\Queue\QueueConfigFactory;
 use Jiannei\LaravelRabbitMQ\Queue\RabbitMQQueue;
 
 class RabbitMQConnector implements ConnectorInterface
@@ -20,6 +20,6 @@ class RabbitMQConnector implements ConnectorInterface
      */
     public function connect(array $config): Queue
     {
-        return new RabbitMQQueue(QueueConfigFactory::make($config), ConnectionFactory::make($config));
+        return new RabbitMQQueue(ConfigFactory::make($config), ConnectionFactory::make($config));
     }
 }
