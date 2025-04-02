@@ -1,32 +1,33 @@
 {
-    "name": "jiannei/laravel-rabbitmq",
-    "description": "RabbitMQ driver for Laravel Queue.",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Jiannei\\LaravelRabbitMQ\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "jiannei",
-            "email": "longjian.huang@foxmail.com"
-        }
-    ],
-    "require": {
-        "php": "^7.2||^8.0",
-        "php-amqplib/php-amqplib": "^3.7"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^6.47",
-        "pestphp/pest": "^1.23"
-    },
-    "scripts": {
-        "test": "vendor/bin/pest"
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
+  "name": "jiannei/laravel-rabbitmq",
+  "description": "RabbitMQ driver for Laravel Queue.",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Jiannei\\LaravelRabbitMQ\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "jiannei",
+      "email": "longjian.huang@foxmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2||^8.0",
+    "php-amqplib/php-amqplib": "^3.7",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.47",
+    "pestphp/pest": "^1.23"
+  },
+  "scripts": {
+    "test": "vendor/bin/pest"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
 }

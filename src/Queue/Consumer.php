@@ -64,11 +64,12 @@ class Consumer extends Worker
      *
      * @param  string  $connectionName
      * @param  string  $queue
+     * @param  WorkerOptions  $options
      * @return int
      *
      * @throws Throwable
      */
-    public function daemon($connectionName, $queue, WorkerOptions $options)
+    public function daemon($connectionName, $queue, WorkerOptions $options): int
     {
         if ($this->supportsAsyncSignals()) {
             $this->listenForSignals();
@@ -192,12 +193,12 @@ class Consumer extends Worker
      *
      * @param  int  $status
      * @param  WorkerOptions|null  $options
-     * @return void
+     * @return int
      */
-    public function stop($status = 0, $options = null)
+    public function stop($status = 0, $options = null): int
     {
         // Tell the server you are going to stop consuming.
-        // It will finish up the last message and not send you any more.
+        // It will finish up the last message and not send you anymore.
         $this->channel->basic_cancel($this->consumerTag, false, true);
 
         return parent::stop($status, $options);
