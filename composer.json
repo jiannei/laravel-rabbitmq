@@ -1,0 +1,28 @@
+{
+    "name": "jiannei/laravel-rabbitmq",
+    "description": "RabbitMQ driver for Laravel Queue.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jiannei\\LaravelRabbitmq\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jiannei",
+            "email": "longjian.huang@foxmail.com"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^6.47",
+        "pestphp/pest": "^1.23"
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
