@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the overtrue/weather.
+ * This file is part of the jiannei/laravel-rabbitmq.
  *
  * (c) jiannei <longjian.huang@foxmail.com>
  *
