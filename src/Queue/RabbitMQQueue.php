@@ -92,7 +92,7 @@ class RabbitMQQueue extends Queue implements QueueContract
     {
         $queue = $this->getQueue($queue);
 
-        if (! $this->isQueueExists($queue)) {
+        if (!$this->isQueueExists($queue)) {
             return 0;
         }
 
@@ -269,7 +269,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function getConnection(): AbstractConnection
     {
-        if (! $this->connection) {
+        if (!$this->connection) {
             throw new RuntimeException('Queue has no AMQPConnection set.');
         }
 
@@ -287,7 +287,7 @@ class RabbitMQQueue extends Queue implements QueueContract
         $job = $this->getConfig()->getAbstractJob();
 
         throw_if(
-            ! is_a($job, RabbitMQJob::class, true),
+            !is_a($job, RabbitMQJob::class, true),
             Exception::class,
             sprintf('Class %s must extend: %s', $job, RabbitMQJob::class)
         );
@@ -368,7 +368,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function deleteExchange(string $name, bool $unused = false): void
     {
-        if (! $this->isExchangeExists($name)) {
+        if (!$this->isExchangeExists($name)) {
             return;
         }
 
@@ -446,7 +446,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function deleteQueue(string $name, bool $if_unused = false, bool $if_empty = false): void
     {
-        if (! $this->isQueueExists($name)) {
+        if (!$this->isQueueExists($name)) {
             return;
         }
 
@@ -569,7 +569,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function close(): void
     {
-        if (isset($this->currentJob) && ! $this->currentJob->isDeletedOrReleased()) {
+        if (isset($this->currentJob) && !$this->currentJob->isDeletedOrReleased()) {
             $this->reject($this->currentJob, true);
         }
 
@@ -591,7 +591,7 @@ class RabbitMQQueue extends Queue implements QueueContract
         // Messages with a priority which is higher than the queue's maximum, are treated as if they were
         // published with the maximum priority.
         // Quorum queues does not support priority.
-        if ($this->getConfig()->isPrioritizeDelayed() && ! $this->getConfig()->isQuorum()) {
+        if ($this->getConfig()->isPrioritizeDelayed() && !$this->getConfig()->isQuorum()) {
             $arguments['x-max-priority'] = $this->getConfig()->getQueueMaxPriority();
         }
 
@@ -688,7 +688,7 @@ class RabbitMQQueue extends Queue implements QueueContract
     protected function declareDestination(string $destination, ?string $exchange = null, string $exchangeType = AMQPExchangeType::DIRECT): void
     {
         // When an exchange is provided and no exchange is present in RabbitMQ, create an exchange.
-        if ($exchange && ! $this->isExchangeExists($exchange)) {
+        if ($exchange && !$this->isExchangeExists($exchange)) {
             $this->declareExchange($exchange, $exchangeType);
         }
 
@@ -733,7 +733,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     protected function publishBasic($msg, $exchange = '', $destination = '', $mandatory = false, $immediate = false, $ticket = null): void
     {
-        $this->getChannel()->basic_publish($msg, $exchange, $destination, $mandatory, $immediate, $ticket);
+        $this->getChannel()->basic_publish(...func_get_args());
     }
 
     protected function batchPublish(): void
@@ -743,7 +743,7 @@ class RabbitMQQueue extends Queue implements QueueContract
 
     public function getChannel($forceNew = false): AMQPChannel
     {
-        if (! $this->channel || $forceNew) {
+        if (!$this->channel || $forceNew) {
             $this->channel = $this->createChannel();
         }
 
@@ -753,16 +753,5 @@ class RabbitMQQueue extends Queue implements QueueContract
     protected function createChannel(): AMQPChannel
     {
         return $this->getConnection()->channel();
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected function reconnect(): void
-    {
-        // Reconnects using the original connection settings.
-        $this->getConnection()->reconnect();
-        // Create a new main channel because all old channels are removed.
-        $this->getChannel(true);
     }
 }
