@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the overtrue/weather.
+ *
+ * (c) jiannei <longjian.huang@foxmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jiannei\LaravelRabbitMQ\Queue\Jobs;
 
 use Illuminate\Container\Container;
@@ -70,7 +79,7 @@ class RabbitMQJob extends Job implements JobContract
      */
     public function attempts(): int
     {
-        if (!$data = $this->getRabbitMQMessageHeaders()) {
+        if (! $data = $this->getRabbitMQMessageHeaders()) {
             return 1;
         }
 
@@ -94,7 +103,6 @@ class RabbitMQJob extends Job implements JobContract
 
     /**
      * {@inheritdoc}
-     *
      */
     public function delete(): void
     {
@@ -102,7 +110,7 @@ class RabbitMQJob extends Job implements JobContract
 
         // When delete is called and the Job was not failed, the message must be acknowledged.
         // This is because this is a controlled call by a developer. So the message was handled correct.
-        if (!$this->failed) {
+        if (! $this->failed) {
             $this->rabbitmq->ack($this);
         }
     }
@@ -149,7 +157,7 @@ class RabbitMQJob extends Job implements JobContract
     protected function getRabbitMQMessageHeaders(): ?array
     {
         /** @var AMQPTable|null $headers */
-        if (!$headers = Arr::get($this->message->get_properties(), 'application_headers')) {
+        if (! $headers = Arr::get($this->message->get_properties(), 'application_headers')) {
             return null;
         }
 

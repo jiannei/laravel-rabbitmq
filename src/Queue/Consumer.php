@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the overtrue/weather.
+ *
+ * (c) jiannei <longjian.huang@foxmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jiannei\LaravelRabbitMQ\Queue;
 
 use Exception;
@@ -134,7 +143,7 @@ class Consumer extends Worker
             // Before reserving any jobs, we will make sure this queue is not paused and
             // if it is we will just pause this worker for a given amount of time and
             // make sure we do not need to kill this worker process off completely.
-            if (!$this->daemonShouldRun($options, $connectionName, $queue)) {
+            if (! $this->daemonShouldRun($options, $connectionName, $queue)) {
                 $this->pauseWorker($options, $lastRestart);
 
                 continue;
@@ -169,7 +178,7 @@ class Consumer extends Worker
                 $this->currentJob
             );
 
-            if (!is_null($status)) {
+            if (! is_null($status)) {
                 return $this->stop($status, $options);
             }
 
@@ -185,7 +194,7 @@ class Consumer extends Worker
      */
     protected function daemonShouldRun(WorkerOptions $options, $connectionName, $queue): bool
     {
-        return !((($this->isDownForMaintenance)() && !$options->force) || $this->paused);
+        return ! ((($this->isDownForMaintenance)() && ! $options->force) || $this->paused);
     }
 
     /**

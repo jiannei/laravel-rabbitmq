@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the overtrue/weather.
+ *
+ * (c) jiannei <longjian.huang@foxmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jiannei\LaravelRabbitMQ\Queue;
 
 use Illuminate\Support\Arr;
@@ -9,15 +18,15 @@ class ConfigFactory
     protected const CONFIG_OPTIONS = 'options';
 
     /**
-     * Create a config object from config array
+     * Create a config object from config array.
      */
     public static function make(array $config = []): Config
     {
         return tap(new Config(), function (Config $queueConfig) use ($config) {
-            if (!empty($queue = Arr::get($config, 'queue'))) {
+            if (! empty($queue = Arr::get($config, 'queue'))) {
                 $queueConfig->setQueue($queue);
             }
-            if (!empty($afterCommit = Arr::get($config, 'after_commit'))) {
+            if (! empty($afterCommit = Arr::get($config, 'after_commit'))) {
                 $queueConfig->setDispatchAfterCommit($afterCommit);
             }
 

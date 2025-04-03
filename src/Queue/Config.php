@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the overtrue/weather.
+ *
+ * (c) jiannei <longjian.huang@foxmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jiannei\LaravelRabbitMQ\Queue;
 
 use Jiannei\LaravelRabbitMQ\Queue\Jobs\RabbitMQJob;
@@ -33,7 +42,7 @@ class Config
     protected $options = [];
 
     /**
-     * Holds the default queue name
+     * Holds the default queue name.
      *
      * When no queue name is provided by laravel queue / workers via the QueueApi method's,
      * this value is used to publish messages.
@@ -67,7 +76,7 @@ class Config
     }
 
     /**
-     * Get the Job::class to use when processing messages
+     * Get the Job::class to use when processing messages.
      */
     public function getAbstractJob(): string
     {
@@ -148,7 +157,7 @@ class Config
     }
 
     /**
-     * Get the exchange type
+     * Get the exchange type.
      *
      * There are four basic RabbitMQ exchange types in RabbitMQ, each of which uses different parameters
      * and bindings to route messages in various ways, These are: 'direct', 'topic', 'fanout', 'headers'
@@ -248,7 +257,7 @@ class Config
     }
 
     /**
-     * Holds all unknown queue options provided in the connection config
+     * Holds all unknown queue options provided in the connection config.
      */
     public function getOptions(): array
     {
@@ -263,7 +272,7 @@ class Config
     }
 
     /**
-     * Filters $value to boolean value
+     * Filters $value to boolean value.
      *
      * Returns: &true;
      * For values: 1, '1', true, 'true', 'yes'

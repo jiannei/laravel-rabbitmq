@@ -1,10 +1,14 @@
 <?php
 
-/**
- * This is an example of queue connection configuration.
- * It will be merged into config/queue.php.
- * You need to set proper values in `.env`.
+/*
+ * This file is part of the overtrue/weather.
+ *
+ * (c) jiannei <longjian.huang@foxmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
+
 return [
 
     'driver' => 'rabbitmq',

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the overtrue/weather.
+ *
+ * (c) jiannei <longjian.huang@foxmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jiannei\LaravelRabbitMQ\Queue\Connection;
 
 use Illuminate\Support\Arr;
@@ -12,13 +21,13 @@ class ConfigFactory
     protected const CONFIG_OPTIONS = 'options';
 
     /**
-     * Create a config object from config array
+     * Create a config object from config array.
      */
     public static function make(array $config = []): AMQPConnectionConfig
     {
         return tap(new AMQPConnectionConfig(), function (AMQPConnectionConfig $connectionConfig) use ($config) {
             // Set the connection to a Lazy by default
-            $connectionConfig->setIsLazy(!in_array(
+            $connectionConfig->setIsLazy(! in_array(
                 Arr::get($config, 'lazy') ?? true,
                 [false, 0, '0', 'false', 'no'],
                 true)
@@ -26,9 +35,9 @@ class ConfigFactory
 
             // Set the connection to unsecure by default
             $connectionConfig->setIsSecure(in_array(
-                    Arr::get($config, 'secure'),
-                    [true, 1, '1', 'true', 'yes'],
-                    true)
+                Arr::get($config, 'secure'),
+                [true, 1, '1', 'true', 'yes'],
+                true)
             );
 
             if ($connectionConfig->isSecure()) {
