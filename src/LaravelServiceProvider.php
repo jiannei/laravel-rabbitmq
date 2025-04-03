@@ -33,15 +33,13 @@ class LaravelServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->app->singleton('rabbitmq.consumer', function () {
-                $isDownForMaintenance = function () {
-                    return $this->app->isDownForMaintenance();
-                };
-
                 return new Consumer(
                     $this->app['queue'],
                     $this->app['events'],
                     $this->app[ExceptionHandler::class],
-                    $isDownForMaintenance
+                    function () {
+                        return $this->app->isDownForMaintenance();
+                    }
                 );
             });
 
@@ -54,17 +52,14 @@ class LaravelServiceProvider extends ServiceProvider
 
             $this->commands([
                 Console\ConsumeCommand::class,
+                Console\ExchangeDeclareCommand::class,
+                Console\ExchangeDeleteCommand::class,
+                Console\QueueBindCommand::class,
+                Console\QueueDeclareCommand::class,
+                Console\QueueDeleteCommand::class,
+                Console\QueuePurgeCommand::class,
             ]);
         }
-
-        $this->commands([
-            Console\ExchangeDeclareCommand::class,
-            Console\ExchangeDeleteCommand::class,
-            Console\QueueBindCommand::class,
-            Console\QueueDeclareCommand::class,
-            Console\QueueDeleteCommand::class,
-            Console\QueuePurgeCommand::class,
-        ]);
     }
 
     /**
