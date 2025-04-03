@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the overtrue/weather.
+ *
+ * (c) jiannei <longjian.huang@foxmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jiannei\LaravelRabbitMQ\Console;
 
 use Exception;
@@ -24,7 +33,7 @@ class ExchangeDeleteCommand extends Command
 
         $queue = $connector->connect($config);
 
-        if (!$queue->isExchangeExists($this->argument('name'))) {
+        if (! $queue->isExchangeExists($this->argument('name'))) {
             $this->warn('Exchange does not exist.');
 
             return;

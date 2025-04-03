@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the overtrue/weather.
+ *
+ * (c) jiannei <longjian.huang@foxmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jiannei\LaravelRabbitMQ\Queue;
 
 use Exception;
@@ -25,12 +34,14 @@ class RabbitMQQueue extends Queue implements QueueContract
 {
     /**
      * The RabbitMQ connection instance.
+     *
      * @var AbstractConnection|null
      */
     protected $connection = null;
 
     /**
      * The RabbitMQ channel instance.
+     *
      * @var AMQPChannel|null
      */
     protected $channel = null;
@@ -52,11 +63,13 @@ class RabbitMQQueue extends Queue implements QueueContract
 
     /**
      * Current job being processed.
+     *
      * @var RabbitMQJob|null
      */
     protected $currentJob = null;
     /**
-     * Holds the Configuration
+     * Holds the Configuration.
+     *
      * @var Config
      */
     protected $config;
@@ -79,7 +92,7 @@ class RabbitMQQueue extends Queue implements QueueContract
     {
         $queue = $this->getQueue($queue);
 
-        if (!$this->isQueueExists($queue)) {
+        if (! $this->isQueueExists($queue)) {
             return 0;
         }
 
@@ -189,7 +202,7 @@ class RabbitMQQueue extends Queue implements QueueContract
     /**
      * @throws AMQPProtocolChannelException
      */
-    public function bulkRaw(string $payload, string $queue = null, array $options = [])
+    public function bulkRaw(string $payload, ?string $queue = null, array $options = [])
     {
         [$destination, $exchange, $exchangeType, $attempts] = $this->publishProperties($queue, $options);
 
@@ -256,7 +269,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function getConnection(): AbstractConnection
     {
-        if (!$this->connection) {
+        if (! $this->connection) {
             throw new RuntimeException('Queue has no AMQPConnection set.');
         }
 
@@ -274,7 +287,7 @@ class RabbitMQQueue extends Queue implements QueueContract
         $job = $this->getConfig()->getAbstractJob();
 
         throw_if(
-            !is_a($job, RabbitMQJob::class, true),
+            ! is_a($job, RabbitMQJob::class, true),
             Exception::class,
             sprintf('Class %s must extend: %s', $job, RabbitMQJob::class)
         );
@@ -355,7 +368,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function deleteExchange(string $name, bool $unused = false): void
     {
-        if (!$this->isExchangeExists($name)) {
+        if (! $this->isExchangeExists($name)) {
             return;
         }
 
@@ -375,7 +388,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      *
      * @throws AMQPProtocolChannelException
      */
-    public function isQueueExists(string $name = null): bool
+    public function isQueueExists(?string $name = null): bool
     {
         $queueName = $this->getQueue($name);
 
@@ -433,7 +446,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function deleteQueue(string $name, bool $if_unused = false, bool $if_empty = false): void
     {
-        if (!$this->isQueueExists($name)) {
+        if (! $this->isQueueExists($name)) {
             return;
         }
 
@@ -462,7 +475,7 @@ class RabbitMQQueue extends Queue implements QueueContract
     /**
      * Purge the queue of messages.
      */
-    public function purge(string $queue = null): void
+    public function purge(?string $queue = null): void
     {
         // create a temporary channel, so the main channel will not be closed on exception
         $channel = $this->createChannel();
@@ -556,7 +569,7 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     public function close(): void
     {
-        if (isset($this->currentJob) && !$this->currentJob->isDeletedOrReleased()) {
+        if (isset($this->currentJob) && ! $this->currentJob->isDeletedOrReleased()) {
             $this->reject($this->currentJob, true);
         }
 
@@ -578,7 +591,7 @@ class RabbitMQQueue extends Queue implements QueueContract
         // Messages with a priority which is higher than the queue's maximum, are treated as if they were
         // published with the maximum priority.
         // Quorum queues does not support priority.
-        if ($this->getConfig()->isPrioritizeDelayed() && !$this->getConfig()->isQuorum()) {
+        if ($this->getConfig()->isPrioritizeDelayed() && ! $this->getConfig()->isQuorum()) {
             $arguments['x-max-priority'] = $this->getConfig()->getQueueMaxPriority();
         }
 
@@ -610,7 +623,7 @@ class RabbitMQQueue extends Queue implements QueueContract
     /**
      * Get the exchange name, or empty string; as default value.
      */
-    protected function getExchange(string $exchange = null): string
+    protected function getExchange(?string $exchange = null): string
     {
         return $exchange ?? $this->getConfig()->getExchange();
     }
@@ -627,7 +640,7 @@ class RabbitMQQueue extends Queue implements QueueContract
     /**
      * Get the exchangeType, or AMQPExchangeType::DIRECT as default.
      */
-    protected function getExchangeType(string $type = null): string
+    protected function getExchangeType(?string $type = null): string
     {
         $constant = AMQPExchangeType::class.'::'.Str::upper($type ?: $this->getConfig()->getExchangeType());
 
@@ -637,7 +650,7 @@ class RabbitMQQueue extends Queue implements QueueContract
     /**
      * Get the exchange for failed messages.
      */
-    protected function getFailedExchange(string $exchange = null): string
+    protected function getFailedExchange(?string $exchange = null): string
     {
         return $exchange ?? $this->getConfig()->getFailedExchange();
     }
@@ -672,10 +685,10 @@ class RabbitMQQueue extends Queue implements QueueContract
      *
      * @throws AMQPProtocolChannelException
      */
-    protected function declareDestination(string $destination, string $exchange = null, string $exchangeType = AMQPExchangeType::DIRECT): void
+    protected function declareDestination(string $destination, ?string $exchange = null, string $exchangeType = AMQPExchangeType::DIRECT): void
     {
         // When an exchange is provided and no exchange is present in RabbitMQ, create an exchange.
-        if ($exchange && !$this->isExchangeExists($exchange)) {
+        if ($exchange && ! $this->isExchangeExists($exchange)) {
             $this->declareExchange($exchange, $exchangeType);
         }
 
@@ -730,7 +743,7 @@ class RabbitMQQueue extends Queue implements QueueContract
 
     public function getChannel($forceNew = false): AMQPChannel
     {
-        if (!$this->channel || $forceNew) {
+        if (! $this->channel || $forceNew) {
             $this->channel = $this->createChannel();
         }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the overtrue/weather.
+ *
+ * (c) jiannei <longjian.huang@foxmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jiannei\LaravelRabbitMQ\Queue\Connection;
 
 use Exception;
@@ -27,7 +36,7 @@ class ConnectionFactory
     protected const CONFIG_CONNECTION = 'connection';
 
     /**
-     * Create a Connection
+     * Create a Connection.
      *
      * @throws Exception
      */
@@ -44,7 +53,7 @@ class ConnectionFactory
     }
 
     /**
-     * Get the validated connection from config
+     * Get the validated connection from config.
      */
     protected static function getConnectionFromConfig(array $config): string
     {
@@ -56,7 +65,7 @@ class ConnectionFactory
     }
 
     /**
-     * Creation of your own connection
+     * Creation of your own connection.
      */
     protected static function create($connection, AMQPConnectionConfig $config): AbstractConnection
     {
@@ -163,7 +172,7 @@ class ConnectionFactory
 
     protected static function assertConnectionFromConfig(string $connection): void
     {
-        if ($connection !== self::CONNECTION_TYPE_DEFAULT && !is_subclass_of($connection, self::CONNECTION_TYPE_EXTENDED)) {
+        if ($connection !== self::CONNECTION_TYPE_DEFAULT && ! is_subclass_of($connection, self::CONNECTION_TYPE_EXTENDED)) {
             throw new AMQPLogicException(sprintf('The config property \'%s\' must contain \'%s\' or must extend: %s', self::CONFIG_CONNECTION, self::CONNECTION_TYPE_DEFAULT,
                 class_basename(self::CONNECTION_TYPE_EXTENDED)));
         }
@@ -190,7 +199,7 @@ class ConnectionFactory
 
     protected static function assertExtendedOf($connection, string $parent): void
     {
-        if (!is_subclass_of($connection, $parent) && $connection !== $parent) {
+        if (! is_subclass_of($connection, $parent) && $connection !== $parent) {
             throw new AMQPLogicException(sprintf('The connection must extend: %s', class_basename($parent)));
         }
     }
