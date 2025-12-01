@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Jiannei\LaravelRabbitMQ\Console;
+namespace Jiannei\LaravelRabbitMQ\Console\Commands;
 
 use Illuminate\Queue\Console\WorkCommand;
 use Illuminate\Support\Str;

@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Jiannei\LaravelRabbitMQ\Console;
+namespace Jiannei\LaravelRabbitMQ\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;

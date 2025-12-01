@@ -14,7 +14,7 @@ namespace Jiannei\LaravelRabbitMQ;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Support\ServiceProvider;
-use Jiannei\LaravelRabbitMQ\Console\ConsumeCommand;
+use Jiannei\LaravelRabbitMQ\Console\Commands\ConsumeCommand;
 use Jiannei\LaravelRabbitMQ\Queue\Connectors\RabbitMQConnector;
 use Jiannei\LaravelRabbitMQ\Queue\Consumer;
 use Jiannei\LaravelRabbitMQ\Queue\RabbitMQQueue;
@@ -51,13 +51,13 @@ class LaravelServiceProvider extends ServiceProvider
             });
 
             $this->commands([
-                Console\ConsumeCommand::class,
-                Console\ExchangeDeclareCommand::class,
-                Console\ExchangeDeleteCommand::class,
-                Console\QueueBindCommand::class,
-                Console\QueueDeclareCommand::class,
-                Console\QueueDeleteCommand::class,
-                Console\QueuePurgeCommand::class,
+                Console\Commands\ConsumeCommand::class,
+                Console\Commands\ExchangeDeclareCommand::class,
+                Console\Commands\ExchangeDeleteCommand::class,
+                Console\Commands\QueueBindCommand::class,
+                Console\Commands\QueueDeclareCommand::class,
+                Console\Commands\QueueDeleteCommand::class,
+                Console\Commands\QueuePurgeCommand::class,
             ]);
         }
     }

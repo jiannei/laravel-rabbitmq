@@ -11,7 +11,7 @@
 
 namespace Jiannei\LaravelRabbitMQ\Tests;
 
-use Jiannei\LaravelRabbitMQ\LaravelServiceProvider;
+use Jiannei\LaravelRabbitMQ\Providers\LaravelServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {

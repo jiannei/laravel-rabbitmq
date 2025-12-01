@@ -9,39 +9,37 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Jiannei\LaravelRabbitMQ\Console;
+namespace Jiannei\LaravelRabbitMQ\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Console\ConfirmableTrait;
 use Jiannei\LaravelRabbitMQ\Queue\Connectors\RabbitMQConnector;
 
-class QueuePurgeCommand extends Command
+class QueueBindCommand extends Command
 {
-    use ConfirmableTrait;
-
-    protected $signature = 'rabbitmq:queue-purge
+    protected $signature = 'rabbitmq:queue-bind                          
                            {queue}
+                           {exchange}
                            {connection=rabbitmq : The name of the queue connection to use}
-                           {--force : Force the operation to run when in production}';
+                           {--routing-key= : Bind queue to exchange via routing key}';
 
-    protected $description = 'Purge all messages in queue';
+    protected $description = 'Bind queue to exchange';
 
     /**
      * @throws Exception
      */
     public function handle(RabbitMQConnector $connector): void
     {
-        if (! $this->confirmToProceed()) {
-            return;
-        }
-
         $config = $this->laravel['config']->get('queue.connections.'.$this->argument('connection'));
 
         $queue = $connector->connect($config);
 
-        $queue->purge($this->argument('queue'));
+        $queue->bindQueue(
+            $this->argument('queue'),
+            $this->argument('exchange'),
+            (string) $this->option('routing-key')
+        );
 
-        $this->info('Queue purged successfully.');
+        $this->info('Queue bound to exchange successfully.');
     }
 }
