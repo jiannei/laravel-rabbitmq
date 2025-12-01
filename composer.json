@@ -19,22 +19,22 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "orchestra/testbench": "^6.47",
-    "pestphp/pest": "^1.23"
+    "orchestra/testbench": "^4.18",
+    "phpunit/phpunit": "^8.5.8|^9.3.3"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jiannei\\LaravelRabbitMQ\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   },
   "extra": {
     "laravel": {
       "providers": [
         "Jiannei\\LaravelRabbitMQ\\LaravelServiceProvider"
       ]
-    }
-  },
-  "scripts": {
-    "test": "vendor/bin/pest"
-  },
-  "config": {
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
     }
   }
 }
